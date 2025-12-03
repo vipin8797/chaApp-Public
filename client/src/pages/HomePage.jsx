@@ -14,7 +14,7 @@ const HomePage = () => {
         h-screen
         sm:px-[15%]
         sm:py-[5%]
-        bg-gray-500
+        
       "
     >
       <div

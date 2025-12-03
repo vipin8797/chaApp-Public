@@ -16,7 +16,7 @@ const ChatContainer = ({ selectedUser, setSelectedUser }) => {
 
       {/* TOP BAR */}
       <div className="flex items-center gap-3 py-3 mx-4 border-b border-stone-500">
-        <img src={assets.profile_martin} alt="" className="w-8 rounded-full" />
+        <img src={selectedUser?.profilePic} alt="" className="w-8 rounded-full" />
 
         <p className="flex-1 text-lg text-white flex items-center gap-2">
           {selectedUser.fullName || "Martin Johnson"}
