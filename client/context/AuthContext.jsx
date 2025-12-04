@@ -28,6 +28,81 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+
+
+  //Login function to handle user authentication and socket connection
+const login = async (credentials) => {
+  try {
+    const { data } = await axios.post("/api/auth/login", credentials);
+
+    if (data.success) {
+      setAuthUser(data.userData);
+
+      // Set token globally
+      axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+
+      setToken(data.token);
+      localStorage.setItem("token", data.token);
+
+      // Connect socket
+      connectSocket(data.userData);
+
+      toast.success(data.message);
+    } else {
+      toast.error(data.message);
+    }
+  } catch (err) {
+    toast.error(err.message);
+  }
+};
+
+
+
+//Logout function to handle user logout and socket disconnections
+const logout = async () => {
+  try {
+    // Remove token
+    localStorage.removeItem("token");
+    setToken(null);
+
+    // Remove user
+    setAuthUser(null);
+    setOnlineUsers([]);
+
+    // Remove token from axios
+    delete axios.defaults.headers.common["Authorization"];
+
+    // Disconnect socket (only if exists)
+    if (socket) socket.disconnect();
+
+    toast.success("Logged out successfully");
+  } catch (err) {
+    toast.error("Logout failed");
+  }
+};
+
+
+
+
+
+//Update profile function to handle user profile updates
+const updateProfile = async (body) => {
+  try {
+    const { data } = await axios.put("/api/auth/update-profile", body);
+
+    if (data.success) {
+      setAuthUser(data.user);
+      toast.success("Profile updated successfully");   // FIXED
+    } else {
+      toast.error(data.message);
+    }
+  } catch (err) {
+    toast.error(err.message);
+  }
+};
+
+
+
   // ----------- CONNECT SOCKET -----------
   const connectSocket = (userData) => {
     if (!userData || socket?.connected) return;
@@ -59,6 +134,9 @@ export const AuthProvider = ({ children }) => {
     authUser,
     onlineUsers,
     socket,
+    login,
+    logout,
+    updateProfile,
     setToken,
     setAuthUser,
   };
