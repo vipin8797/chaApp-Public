@@ -4,6 +4,7 @@ import cors from "cors";
 import http from "http";
 import { connectDB } from "./lib/db.js";
 import userRouter from "./routes/userRoutes.js";
+import messageRouter from "./routes/messageRoutes.js";
 
 
 
@@ -19,6 +20,7 @@ app.use("/api/status", (req, res) => {
   res.status(200).json({ status: "ok", message: "Server is live" });
 });
 app.use("/api/aut",userRouter);
+app.use("/api/messages",messageRouter);
 
 
 
