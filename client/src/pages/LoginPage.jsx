@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import assets from "../assets/assets";
+import { AuthContext } from "../../context/AuthContext";
 
 const LoginPage = () => {
   const [currState, setCurrState] = useState("Sign Up");
@@ -9,13 +10,28 @@ const LoginPage = () => {
   const [bio, setBio] = useState("");
   const [isDataSubmitted, setIsDataSubmitted] = useState(false);
 
-  const onSubmitHandler = (event)=>{
-    event.preventDefault();
-    if(currState === "Sign Up" && !isDataSubmitted){
-      setIsDataSubmitted(true)
-      return;
-    }
+  const {login} = useContext(AuthContext);
+
+
+  const onSubmitHandler = (event) => {
+  event.preventDefault();
+
+  // Step 1 → If Sign Up and user has NOT provided bio yet
+  if (currState === "Sign Up" && !isDataSubmitted) {
+    setIsDataSubmitted(true);
+    return;
   }
+
+  // Step 2 → Call login(), which handles both
+  login({
+    fullName,
+    email,
+    password,
+    bio,
+    isSignUp: currState === "Sign Up"  // IMPORTANT flag
+  });
+};
+
 
   return (
     <div className="min-h-screen bg-cover bg-center flex items-center
