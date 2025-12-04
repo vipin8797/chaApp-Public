@@ -4,9 +4,12 @@ import {
   getMessages,
   getUsersForSidebar,
   markMessageAsSeen,
+  sendMessage,
 } from "../controllers/messageController.js";
 
 const messageRouter = express.Router({ mergeParams: true });
+
+
 
 // Routes
 messageRouter.get("/users", protectRoute, getUsersForSidebar);
@@ -16,5 +19,9 @@ messageRouter.get("/mark/:id", protectRoute, markMessageAsSeen);
 
 // Dynamic message route last
 messageRouter.get("/:id", protectRoute, getMessages);
+
+//send message route
+messageRouter.post("/send/:id", protectRoute, sendMessage);
+
 
 export default messageRouter;
