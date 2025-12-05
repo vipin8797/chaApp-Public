@@ -59,7 +59,12 @@ app.use(cors());
 app.use("/api/status", (req, res) => {
   res.status(200).json({ status: "ok", message: "Server is live" });
 });
-app.use("/api/aut",userRouter);
+
+app.use((req,res,next)=>{
+  console.log("got..");
+  next();
+})
+app.use("/api/auth",userRouter);
 app.use("/api/messages",messageRouter);
 
 
