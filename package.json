@@ -1,0 +1,11 @@
+{
+  "name": "chatapp",
+  "private": true,
+  "workspaces": [
+    "client",
+    "backend"
+  ],
+  "scripts": {
+    "build": "cd client && npm install && npm run build"
+  }
+}
