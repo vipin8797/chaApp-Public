@@ -74,7 +74,13 @@ app.use("/api/messages",messageRouter);
 //Connect to MONGODB
 await connectDB();
 
+if(process.env.NODE_ENV != "production"){
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
       console.log(`Server listening at ${PORT}`);
     });
+}
+
+//Export server for vercer
+export default server;
+
