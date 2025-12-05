@@ -6,6 +6,7 @@ import { connectDB } from "./lib/db.js";
 import userRouter from "./routes/userRoutes.js";
 import messageRouter from "./routes/messageRoutes.js";
 import {Server} from "socket.io";
+import morgan from "morgan";
 
 
 
@@ -60,10 +61,11 @@ app.use("/api/status", (req, res) => {
   res.status(200).json({ status: "ok", message: "Server is live" });
 });
 
-app.use((req,res,next)=>{
-  console.log("got..");
-  next();
-})
+// Morgan logging middleware (common format)
+app.use(morgan("dev"));
+
+
+
 app.use("/api/auth",userRouter);
 app.use("/api/messages",messageRouter);
 
