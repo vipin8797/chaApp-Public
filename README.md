@@ -1,15 +1,15 @@
-# 🚀 chatApp – Real-Time MERN Chat Application
+#  chatApp – Real-Time MERN Chat Application
 
 <p align="center">
-  <img src="https://fakeimg.pl/1200x320/111111/ffffff?text=chatApp&font=bebas" alt="Project Banner" width="100%" />
+  <img src="https://res.cloudinary.com/dvq5yx1vt/image/upload/v1765009898/Gemini_Generated_Image_1d49u91d49u91d49_vfjbp9.png" alt="Project Banner" width="100%" />
 </p>
 
 <p align="center">
-  <a href="YOUR_LIVE_FRONTEND_URL">
+  <a href="https://chat-app-client-eight-chi.vercel.app/">
     <img src="https://img.shields.io/badge/Live_Demo-000?style=for-the-badge&logo=vercel&logoColor=white" />
   </a>
   &nbsp;
-  <a href="YOUR_BACKEND_API_URL">
+  <a href="https://chatapp-backend-5xfq.onrender.com/api/status">
     <img src="https://img.shields.io/badge/Backend_API-430098?style=for-the-badge&logo=render&logoColor=white" />
   </a>
 </p>
@@ -19,7 +19,7 @@ Frontend is deployed on **Vercel**, and backend on **Render** for WebSocket supp
 
 ---
 
-# 🔥 Features
+#  Features
 
 ### 👤 User & Auth
 - Registration & Login (JWT-based)  
@@ -80,8 +80,10 @@ Frontend is deployed on **Vercel**, and backend on **Render** for WebSocket supp
 
 ---
 
+
 # 📁 Project Structure
 
+```text
 chatApp/
 │
 ├── backend/
@@ -104,6 +106,44 @@ chatApp/
 └── README.md
 
 
+
+## 🏗️ Architecture
+
+The application follows a modern **MERN Stack** architecture with a dedicated real-time layer.
+
+```mermaid
+graph TD
+    %% Nodes
+    subgraph Client_Side [🖥️ Client Side]
+        Client[React + Vite + Tailwind]
+    end
+
+    subgraph Backend_Side [⚙️ Backend Layer]
+        Express[Node.js + Express API]
+        Socket[Socket.io Real-Time Engine]
+    end
+
+    subgraph Data_Layer [💾 Data & Storage]
+        Mongo[(MongoDB Atlas)]
+        Cloud[Cloudinary Storage]
+    end
+
+    %% Styles
+    style Client_Side fill:#e3f2fd,stroke:#1565c0
+    style Backend_Side fill:#e8f5e9,stroke:#2e7d32
+    style Data_Layer fill:#fff3e0,stroke:#ef6c00
+
+    %% Connections
+    Client -- "HTTP / Axios (Auth, API)" --> Express
+    Client <== "WebSocket (Bi-directional)" ==> Socket
+    
+    Express -- "Read/Write Data" --> Mongo
+    Express -- "Upload Media" --> Cloud
+    
+    Express -.-> |"Broadcast Events"| Socket
+```
+
+
 ---
 
 # ⚙️ Environment Variables
@@ -121,8 +161,7 @@ NODE_ENV=production
 
 ### **Frontend (.env)**
 
-VITE_BACKEND_URL="https://your-render-backend.onrender.com
-"
+VITE_BACKEND_URL="https://your-render-backend.onrender.com"
 
 
 ---
@@ -182,7 +221,7 @@ stopTyping
 
 ---
 
-# 📡 REST API Routes
+#  REST API Routes
 
 ### Auth
 POST /api/auth/register
@@ -212,7 +251,7 @@ For major changes, open an issue first to discuss what you want to change.
 
 ---
 
-# 📌 Add Your Links Before Final Push
+#   Add Your Links Before Final Push
 
 - **Frontend Live:** YOUR_VERCEL_URL  
 - **Backend Live:** YOUR_RENDER_BACKEND_URL  
@@ -220,41 +259,6 @@ For major changes, open an issue first to discuss what you want to change.
 
 ---
 
-## 🏗️ Architecture
-
-The application follows a modern **MERN Stack** architecture with a dedicated real-time layer.
-
-```mermaid
-graph TD
-    %% Nodes
-    subgraph Client_Side [🖥️ Client Side]
-        Client[React + Vite + Tailwind]
-    end
-
-    subgraph Backend_Side [⚙️ Backend Layer]
-        Express[Node.js + Express API]
-        Socket[Socket.io Real-Time Engine]
-    end
-
-    subgraph Data_Layer [💾 Data & Storage]
-        Mongo[(MongoDB Atlas)]
-        Cloud[Cloudinary Storage]
-    end
-
-    %% Styles
-    style Client_Side fill:#e3f2fd,stroke:#1565c0
-    style Backend_Side fill:#e8f5e9,stroke:#2e7d32
-    style Data_Layer fill:#fff3e0,stroke:#ef6c00
-
-    %% Connections
-    Client -- "HTTP / Axios (Auth, API)" --> Express
-    Client <== "WebSocket (Bi-directional)" ==> Socket
-    
-    Express -- "Read/Write Data" --> Mongo
-    Express -- "Upload Media" --> Cloud
-    
-    Express -.-> |"Broadcast Events"| Socket
-```
 
 
 
