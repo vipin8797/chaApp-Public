@@ -83,7 +83,6 @@ Frontend is deployed on **Vercel**, and backend on **Render** for WebSocket supp
 
 # 📁 Project Structure
 
-```text
 chatApp/
 │
 ├── backend/
@@ -104,6 +103,7 @@ chatApp/
 │   └── .env
 │
 └── README.md
+
 
 
 
