@@ -110,41 +110,6 @@ project_structure: |
 
 
 
-## 🏗️ Architecture
-
-The application follows a modern **MERN Stack** architecture with a dedicated real-time layer.
-
-```mermaid
-graph TD
-    %% Nodes
-    subgraph Client_Side [🖥️ Client Side]
-        Client[React + Vite + Tailwind]
-    end
-
-    subgraph Backend_Side [⚙️ Backend Layer]
-        Express[Node.js + Express API]
-        Socket[Socket.io Real-Time Engine]
-    end
-
-    subgraph Data_Layer [💾 Data & Storage]
-        Mongo[(MongoDB Atlas)]
-        Cloud[Cloudinary Storage]
-    end
-
-    %% Styles
-    style Client_Side fill:#e3f2fd,stroke:#1565c0
-    style Backend_Side fill:#e8f5e9,stroke:#2e7d32
-    style Data_Layer fill:#fff3e0,stroke:#ef6c00
-
-    %% Connections
-    Client -- "HTTP / Axios (Auth, API)" --> Express
-    Client <== "WebSocket (Bi-directional)" ==> Socket
-    
-    Express -- "Read/Write Data" --> Mongo
-    Express -- "Upload Media" --> Cloud
-    
-    Express -.-> |"Broadcast Events"| Socket
-```
 
 
 ---
@@ -261,6 +226,42 @@ For major changes, open an issue first to discuss what you want to change.
 - **GitHub Repo:** YOUR_REPO_LINK  
 
 ---
+
+## 🏗️ Architecture
+
+The application follows a modern **MERN Stack** architecture with a dedicated real-time layer.
+
+```mermaid
+graph TD
+    %% Nodes
+    subgraph Client_Side [🖥️ Client Side]
+        Client[React + Vite + Tailwind]
+    end
+
+    subgraph Backend_Side [⚙️ Backend Layer]
+        Express[Node.js + Express API]
+        Socket[Socket.io Real-Time Engine]
+    end
+
+    subgraph Data_Layer [💾 Data & Storage]
+        Mongo[(MongoDB Atlas)]
+        Cloud[Cloudinary Storage]
+    end
+
+    %% Styles
+    style Client_Side fill:#e3f2fd,stroke:#1565c0
+    style Backend_Side fill:#e8f5e9,stroke:#2e7d32
+    style Data_Layer fill:#fff3e0,stroke:#ef6c00
+
+    %% Connections
+    Client -- "HTTP / Axios (Auth, API)" --> Express
+    Client <== "WebSocket (Bi-directional)" ==> Socket
+    
+    Express -- "Read/Write Data" --> Mongo
+    Express -- "Upload Media" --> Cloud
+    
+    Express -.-> |"Broadcast Events"| Socket
+```
 
 
 
