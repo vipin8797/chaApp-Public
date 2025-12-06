@@ -1,14 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
-
-
+@import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap');
 @import "tailwindcss";
 
-
-*{
-  font-family: "Outfit", sans-serif;
+* {
+  font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+body {
+  background-color: #111b21; /* WhatsApp Main Dark BG */
+  color: #e9edef;
+  overflow: hidden; /* App jaisa feel dene ke liye */
+}
 
-::-webkit-scrollbar{
-  display:none;
+/* Scrollbar ko patla aur dark banate hain */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #374045;
 }
