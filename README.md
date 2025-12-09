@@ -152,7 +152,9 @@ graph TD
 
 ### **Backend (.env)**
 PORT=5000
+
 MONGODB_URI=your_mongo_url
+
 JWT_SECRET=your_jwt_secret
 
 CLOUDINARY_CLOUD_NAME=your_cloud_name
