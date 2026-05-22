@@ -173,17 +173,31 @@ VITE_BACKEND_URL="https://your-render-backend.onrender.com"
 # 🧩 Local Setup
 
 ### 1️⃣ Clone Repo
-git clone https://github.com/yourusername/chatApp.git
-
+```bash
+git clone https://github.com/vipin8797/chaApp-Public.git
+cd chaApp-Public
+```
 
 ### 2️⃣ Backend Setup
-cd client
+```bash
+cd backend
 npm install
+# Copy and configure environment variables
+cp .env.example .env
 npm run dev
+```
 
+### 3️⃣ Frontend Setup
+```bash
+cd ../client
+npm install
+# Copy and configure environment variables
+cp .env.example .env
+npm run dev
+```
 
 Open:  
-http://localhost:5173
+[http://localhost:5173](http://localhost:5173)
 
 
 ---
@@ -257,21 +271,6 @@ For major changes, open an issue first to discuss what you want to change.
 
 #   Add Your Links Before Final Push
 
-- **Frontend Live:** YOUR_VERCEL_URL  
-- **Backend Live:** YOUR_RENDER_BACKEND_URL  
-- **GitHub Repo:** YOUR_REPO_LINK  
-
----
-
-
-
-
-
-
-
-
-  
-
-
-
-
+- **Frontend Live:** https://chat-app-client-eight-chi.vercel.app/
+- **Backend Live:** https://chatapp-backend-5xfq.onrender.com/api/status
+- **GitHub Repo:** https://github.com/vipin8797/chaApp-Public
