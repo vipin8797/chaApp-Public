@@ -8,6 +8,7 @@ import userRouter from "./routes/userRoutes.js";
 import messageRouter from "./routes/messageRoutes.js";
 import {Server} from "socket.io";
 import morgan from "morgan";
+import { errorHandler } from "./middleware/errorHandler.js";
 
 
 
@@ -72,6 +73,9 @@ app.use(morgan("dev"));
 
 app.use("/api/auth",userRouter);
 app.use("/api/messages",messageRouter);
+
+// Global Error Handler Middleware
+app.use(errorHandler);
 
 
 
