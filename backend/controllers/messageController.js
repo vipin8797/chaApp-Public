@@ -1,14 +1,15 @@
 import Message from "../models/Message.js";
 import User from "../models/User.js";
 import cloudinary from "../lib/cloudinary.js";
-import {io , userSocketMap} from "../app.js";
+import { io, userSocketMap } from "../app.js";
+import { HTTP_STATUS } from "../lib/statusCodes.js";
 
 
 // Get all users except the logged in user
-export const getUsersForSidebar = async (req, res) => {
+export const getUsersForSidebar = async (req, res, next) => {
   try {
     if (!req.user) {
-      return res.status(401).json({ success: false, message: "Unauthorized" });
+      return res.status(HTTP_STATUS.UNAUTHORIZED).json({ success: false, message: "Unauthorized access" });
     }
 
     const userId = req.user._id;
@@ -21,7 +22,7 @@ export const getUsersForSidebar = async (req, res) => {
     // Count number of unseen messages from each user -> more efficient with countDocuments
     const unseenMessages = {};
 
-    const counts = await Promise.all(
+    await Promise.all(
       filteredUsers.map((user) =>
         Message.countDocuments({
           senderId: user._id,
@@ -33,16 +34,15 @@ export const getUsersForSidebar = async (req, res) => {
       )
     );
 
-    return res.json({ success: true, users: filteredUsers, unseenMessages });
+    return res.status(HTTP_STATUS.OK).json({ success: true, users: filteredUsers, unseenMessages });
   } catch (err) {
-    console.log(err.message);
-    return res.status(500).json({ success: false, message: err.message });
+    next(err);
   }
 };
 
 
 //Get alll unseen messages for Selected User
-export const getMessages = async (req, res) => {
+export const getMessages = async (req, res, next) => {
   try {
     const { id: selectedUserId } = req.params;
     const myId = req.user._id;
@@ -61,10 +61,9 @@ export const getMessages = async (req, res) => {
       { seen: true }
     );
 
-    return res.json({ success: true, messages });
+    return res.status(HTTP_STATUS.OK).json({ success: true, messages });
   } catch (err) {
-    console.log(err.message);
-    return res.json({ success: false, message: err.message });
+    next(err);
   }
 };
 
@@ -73,7 +72,7 @@ export const getMessages = async (req, res) => {
 
 
 //api to mark message as seen using messag id
-export const markMessageAsSeen = async (req, res) => {
+export const markMessageAsSeen = async (req, res, next) => {
   try {
     const { id } = req.params;
     const myId = req.user._id;
@@ -82,12 +81,12 @@ export const markMessageAsSeen = async (req, res) => {
     const message = await Message.findById(id);
 
     if (!message) {
-      return res.json({ success: false, message: "Message not found" });
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ success: false, message: "Message not found" });
     }
 
     // User can only mark messages received by them, not their own
     if (message.receiverId.toString() !== myId.toString()) {
-      return res.json({
+      return res.status(HTTP_STATUS.FORBIDDEN).json({
         success: false,
         message: "Not allowed to modify this message",
       });
@@ -97,10 +96,9 @@ export const markMessageAsSeen = async (req, res) => {
     message.seen = true;
     await message.save();
 
-    return res.json({ success: true, message });
+    return res.status(HTTP_STATUS.OK).json({ success: true, message });
   } catch (err) {
-    console.log(err.message);
-    return res.json({ success: false, message: err.message });
+    next(err);
   }
 };
 
@@ -108,11 +106,15 @@ export const markMessageAsSeen = async (req, res) => {
 
 
 // Send message to selected User
-export const sendMessage = async (req, res) => {
+export const sendMessage = async (req, res, next) => {
   try {
     const { text, image } = req.body;
     const receiverId = req.params.id;     // FIXED (_id → id)
     const senderId = req.user._id;
+
+    if (!text && !image) {
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ success: false, message: "Message content cannot be empty" });
+    }
 
     let imageUrl = "";                    // FIXED (initialize)
     if (image) {
@@ -133,10 +135,9 @@ export const sendMessage = async (req, res) => {
       io.to(receiverSocketId).emit("newMessage", newMessage);
     }
 
-    return res.json({ success: true, newMessage });
+    return res.status(HTTP_STATUS.CREATED).json({ success: true, newMessage });
 
   } catch (err) {
-    console.log(err.message);
-    return res.json({ success: false, message: err.message });
+    next(err);
   }
 };
