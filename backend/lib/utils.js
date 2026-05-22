@@ -1,14 +1,29 @@
 import jwt from "jsonwebtoken";
 
-// Function to generate token for a user
+/**
+ * Generates a JSON Web Token for the specified user ID.
+ * @param {string|object} userId - The unique identifier of the user.
+ * @returns {string} The signed JWT token.
+ * @throws {Error} If the JWT_SECRET is missing or the userId is invalid.
+ */
 export const generateToken = (userId) => {
-  if (!process.env.JWT_SECRET) {
-    throw new Error("JWT_SECRET is missing in .env file");
+  if (!userId) {
+    throw new Error("Cannot generate token: User ID is required");
   }
 
-  return jwt.sign(
-    { userId },
-    process.env.JWT_SECRET,
-    { expiresIn: "7d" }
-  );
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error("Cannot generate token: JWT_SECRET environment variable is missing");
+  }
+
+  try {
+    return jwt.sign(
+      { userId: userId.toString() },
+      secret,
+      { expiresIn: "7d" }
+    );
+  } catch (err) {
+    console.error("🚨 Error signing JWT token:", err.message);
+    throw err;
+  }
 };
