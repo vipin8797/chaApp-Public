@@ -11,13 +11,30 @@ body {
   overflow: hidden; /* App jaisa feel dene ke liye */
 }
 
-/* Scrollbar ko patla aur dark banate hain */
+/* Custom premium scrollbar for modern sleek interface */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
+
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(17, 27, 33, 0.5); /* Transparent matching app bg */
 }
+
 ::-webkit-scrollbar-thumb {
   background: #374045;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  transition: background-color 0.2s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #4f5d64; /* Lighter shade on hover for premium desktop feel */
+}
+
+/* Firefox compatibility */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #374045 rgba(17, 27, 33, 0.5);
 }
