@@ -38,3 +38,25 @@ body {
   scrollbar-width: thin;
   scrollbar-color: #374045 rgba(17, 27, 33, 0.5);
 }
+
+/* Micro-interaction & transition utility classes */
+.hover-scale {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease-in-out;
+}
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+.hover-scale:active {
+  transform: scale(0.98);
+}
+
+.transition-smooth {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glassmorphism {
+  background: rgba(32, 44, 51, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
