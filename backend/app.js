@@ -4,6 +4,7 @@ import cors from "cors";
 import http from "http";
 import { connectDB } from "./lib/db.js";
 import { verifyEnv } from "./lib/envCheck.js";
+import mongoose from "mongoose";
 import userRouter from "./routes/userRoutes.js";
 import messageRouter from "./routes/messageRoutes.js";
 import {Server} from "socket.io";
@@ -63,7 +64,19 @@ app.use(express.json({ limit: "4mb" }));
 app.use(cors());
 
 app.use("/api/status", (req, res) => {
-  res.status(200).json({ status: "ok", message: "Server is live" });
+  const dbStatus = mongoose.connection.readyState === 1 ? "connected" : "disconnected";
+  res.status(200).json({
+    status: "ok",
+    message: "Server is live",
+    environment: process.env.NODE_ENV || "development",
+    uptime: Math.floor(process.uptime()),
+    database: dbStatus,
+    memory: {
+      rss: `${Math.round(process.memoryUsage().rss / 1024 / 1024)} MB`,
+      heapTotal: `${Math.round(process.memoryUsage().heapTotal / 1024 / 1024)} MB`,
+      heapUsed: `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)} MB`,
+    }
+  });
 });
 
 // Morgan logging middleware (common format)
