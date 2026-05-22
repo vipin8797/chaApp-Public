@@ -225,47 +225,38 @@ Open:
 # 🔌 Socket.io Events
 
 ### **Client → Server**
-sendMessage
-typing
-stopTyping
-
+- `sendMessage`
+- `typing`
+- `stopTyping`
 
 ### **Server → Client**
-receiveMessage
-getOnlineUsers
-typing
-stopTyping
-
+- `receiveMessage`
+- `getOnlineUsers`
+- `typing`
+- `stopTyping`
 
 ---
 
-#  REST API Routes
+# 🌐 REST API Endpoints Reference
 
-### Auth
-POST /api/auth/register
-POST /api/auth/login
+Below is the complete reference of REST API endpoints exposed by the backend layer:
 
-
-### Users
-GET /api/auth/search
-POST /api/auth/friend-request
-POST /api/auth/accept-request
-
-
-### Messages
-POST /api/messages/send/:id
-GET /api/messages/:id
-
-
-### Status
-GET /api/status
-
+| Method | Endpoint | Authorization | Description | Request Body Payload |
+|:---|:---|:---|:---|:---|
+| **POST** | `/api/auth/signup` | Public | Registers a new user account | `{ fullName, email, password, bio }` |
+| **POST** | `/api/auth/login` | Public | Authenticates user & returns token | `{ email, password }` |
+| **GET** | `/api/auth/check` | Protected | Fetches active authenticated user details | None (Authorization Header) |
+| **PUT** | `/api/auth/update-profile` | Protected | Updates profile picture, name, & bio | `{ profilePic, bio, fullName }` |
+| **GET** | `/api/messages/users` | Protected | Lists other registered chat contacts | None (Authorization Header) |
+| **GET** | `/api/messages/:id` | Protected | Retrieves full chat thread with selected user | None (Path Parameter `:id`) |
+| **POST** | `/api/messages/send/:id` | Protected | Dispatches text and image messages to user | `{ text, image }` |
+| **GET** | `/api/messages/mark/:id` | Protected | Marks all received messages from user as seen | None (Path Parameter `:id`) |
+| **GET** | `/api/status` | Public | Returns server health, database state, & metrics | None |
 
 ---
 
 # 🤝 Contributing
-Pull requests are welcome.  
-For major changes, open an issue first to discuss what you want to change.
+Pull requests are welcome. For major changes, open an issue first to discuss what you want to change.
 
 ---
 
