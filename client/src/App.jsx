@@ -11,7 +11,7 @@ const App = () => {
   const {authUser} = useContext(AuthContext);
   return (
     <>
-    <div className='dark:bg-gray-900'>
+    <div className="dark:bg-gray-900">
       <Toaster />
       <Routes>
         <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login" />} />
