@@ -15,7 +15,6 @@ import { errorHandler } from "./middleware/errorHandler.js";
 
 // Verify environment variables on startup
 verifyEnv();
-
 const app = express();
 const server = http.createServer(app);
 
@@ -62,6 +61,7 @@ io.on("connection", (socket) => {
 // Midddlewares
 app.use(express.json({ limit: "4mb" }));
 app.use(cors());
+app.disable("x-powered-by"); // Hide Express signature
 
 app.use("/api/status", (req, res) => {
   const dbStatus = mongoose.connection.readyState === 1 ? "connected" : "disconnected";
@@ -98,7 +98,7 @@ await connectDB();
 if(process.env.NODE_ENV != "production"){
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
-      console.log(`Server listening at ${PORT}`);
+      console.log(`🚀 Server successfully started and listening at port ${PORT}`);
     });
 }
 
