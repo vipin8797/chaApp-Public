@@ -96,7 +96,7 @@ app.use(errorHandler);
 await connectDB();
 
 if(process.env.NODE_ENV != "production"){
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000; // Default port fallback
 server.listen(PORT, () => {
       console.log(`🚀 Server successfully started and listening at port ${PORT}`);
     });
